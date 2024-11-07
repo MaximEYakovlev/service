@@ -4,4 +4,6 @@ coverage
 Dockerfile
 docker-compose.yml
 .env
+package.json
+tsconfig.json
 README.md
