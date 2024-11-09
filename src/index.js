@@ -15,7 +15,7 @@ const fetchData = () => {
         headers: { Authorization: `Bearer ${token}` },
     })
         .then(function (response) {
-            console.log(response);
+            console.log(response.data.response.data);
         })
         .catch(function (error) {
             console.log(error);

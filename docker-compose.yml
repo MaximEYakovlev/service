@@ -15,7 +15,7 @@ services:
   # app:
   #   build: .
   #   environment:
-  #     DATABASE_URL: postgres://user:password@db:5432/wildberries
+  #     DATABASE_URL: postgres://user:password@db:5432/wb
   #   depends_on:
   #     - db
   #   ports:
