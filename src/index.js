@@ -9,24 +9,24 @@ const url = process.env.URL;
 const token = process.env.TOKEN;
 
 const fetchData = () => {
-    axios({
-        method: 'get',
-        url,
-        headers: { Authorization: `Bearer ${token}` },
+  axios({
+    method: 'get',
+    url,
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then(function (response) {
+      console.log(response.data.response.data);
     })
-        .then(function (response) {
-            console.log(response.data.response.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    .catch(function (error) {
+      console.log(error);
+    });
 };
 
 app.get('/', async (req, res) => {
-    fetchData();
-    res.send('Hello World!');
+  fetchData();
+  res.send('Hello World!');
 });
 
 app.listen(port, () => {
-    console.log(`app listening on port ${port}`);
+  console.log(`app listening on port ${port}`);
 });
