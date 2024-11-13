@@ -1,12 +1,15 @@
-async function saveData(data) {
-  const { dtNextBox, dtTillMax, warehouseList } = data;
+import { TariffResponse } from '../dto/interfaces';
+import { db } from '../db/db';
+
+export const saveData = async (tariffResponse: TariffResponse) => {
+  const { dtNextBox, dtTillMax, warehouseList } = tariffResponse.response.data;
 
   let periodId;
-  const period = await knex('periods').where({ dtNextBox, dtTillMax }).first();
+  const period = await db('periods').where({ dtNextBox, dtTillMax }).first();
   if (period) {
     periodId = period.id;
   } else {
-    [periodId] = await knex('periods')
+    [periodId] = await db('periods')
       .insert({ dtNextBox, dtTillMax })
       .returning('id');
   }
@@ -22,18 +25,18 @@ async function saveData(data) {
     } = warehouse;
 
     let warehouseId;
-    const existingWarehouse = await knex('warehouses')
+    const existingWarehouse = await db('warehouses')
       .where({ warehouseName })
       .first();
     if (existingWarehouse) {
       warehouseId = existingWarehouse.id;
     } else {
-      [warehouseId] = await knex('warehouses')
+      [warehouseId] = await db('warehouses')
         .insert({ warehouseName })
         .returning('id');
     }
 
-    await knex('tariffs').insert({
+    await db('tariffs').insert({
       period_id: periodId,
       warehouse_id: warehouseId,
       boxDeliveryAndStorageExpr,
@@ -43,4 +46,4 @@ async function saveData(data) {
       boxStorageLiter,
     });
   }
-}
+};
